@@ -21,10 +21,10 @@ class DiseaseHistoryScheme(BaseModel):
     file_name: Optional[str]
 
 class ScheduleScheme(BaseModel):
-    doctor: str
+    doctor_id: str
     weekDay: str
-    startDateTime: datetime
-    finishDateTime: datetime
+    startTime: datetime
+    finishTime: datetime
     hospital: Optional[str]
     room: str
 

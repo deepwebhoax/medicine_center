@@ -8,8 +8,8 @@ from fastapi import APIRouter, File, UploadFile
 # add correct db classes. create if don't exist
 # from app.validators.schemes.user_schemes import DiseaseHistoryScheme
 from app.validators.schemes.user_schemes import ScheduleScheme
-from app.database.doctor import DoctorCollection
-from app.database.patient import PatientCollection
+from app.database.doctor import DoctorsCollection
+from app.database.patient import PatientsCollection
 from app.database.hospital import HospitalCollection
 from app.database.schedule import ScheduleCollection
 
@@ -17,43 +17,50 @@ from app.database.schedule import ScheduleCollection
 router = APIRouter()
 
 @router.get('/schedule/{doctor_id}')
-async def get_schedule(doctor_id: int, weekDay: str):
+async def get_schedule(doctor_id: str):
     """
-    Get doctor's schedule
-    TODO: make it not so kalechnum
+    Get doctor's all schedules by id
     :param doctor_id:
     :return: schedule_data
     """
-    schedule_data = ScheduleCollection.get_all_objects({'doctor': str(doctor_id), 'weekDay': weekDay})
+    schedule_data = ScheduleCollection.get_objs({'doctor_id': str(doctor_id)},
+                                                 fields=('_id', 'doctor_id', 'weekDay', 'startDateTime', 'finishDateTime', 'hospital', 'room'))
+    if not schedule_data:
+        return {'data': {}, 'result': False}
 
-    return schedule_data
+    return {'data': schedule_data, 'result': True}
 
-
-
-@router.post('/schedule/add/{doctor_id}')
-async def get_patient_profile(doctor_id: str, schedule: ScheduleScheme):
+@router.post('/schedule/add')
+async def add_schedule(schedule: ScheduleScheme):
     """
-    Add schedule for doctor in hospital x
-    TODO: load data from database
-    :param doctor_id: 
+    Takes schedule, adds it to database.
     :param schedule_id: 
     :return: status
     """
-    patient_data = ScheduleCollection.get_one_obj({'user_id': patient_id})
+    ScheduleCollection.insert_obj(dict(schedule))
+    return {'description': 'Addition successful', 'result': True}
 
-
-    return patient_data
-
-@router.put('/schedule/update/{doctor_id}')
-async def get_patient_profile(doctor_id: str, new_schedule: Schedule):
+@router.delete('/schedule/delete/{schedule_id}')
+async def delete_schedule(schedule_id: str):
     """
-    Add schedule for doctor in hospital x
-    TODO: load data from database
-    :param patient_id: 
-    :param history_id: 
-    :return: 
+    Delete schedule by id
+    :param schedule_id: 
+    :return: description and status
     """
-    patient_data = ScheduleCollection.update_obj_by_id( doctor_id, dict(new_schedule))
+    if schedule_id in ScheduleCollection.get_ids():
+        ScheduleCollection.delete_obj_by_id(schedule_id)
+        return {'description': 'Delete successful', 'result': True}
+    return {'description': 'Can\'t find schedule by this id', 'result': False}
 
-
-    return patient_data
+@router.put('/schedule/update/{schedule_id}')
+async def update_schedule(schedule_id: str, new_schedule: ScheduleScheme):
+    """
+    Update schedule by id with new schedule
+    :param schedule_id: id of schedule in database
+    :param new_schedule: dict of new schedule
+    :return: description and status
+    """
+    if schedule_id in ScheduleCollection.get_ids():
+        ScheduleCollection.update_obj_by_id(schedule_id, dict(new_schedule))
+        return {'description': 'Update successful', 'result': True}
+    return {'description': 'Can\'t find a schedule by this id', 'result': False}
