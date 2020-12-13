@@ -123,6 +123,12 @@ class Repository:
         return patient_profile
 
     @classmethod
+    def get_patient_by_dict(cls, filter_dict):
+        patients = cls.__get_users_where(PatientsCollection, **filter_dict)
+        
+        return patients
+
+    @classmethod
     def get_all_patients(cls):
         list_patients = cls.__get_all_users(PatientsCollection)
 
