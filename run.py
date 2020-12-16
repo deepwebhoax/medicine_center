@@ -9,7 +9,7 @@ from starlette.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_utils.tasks import repeat_every
 
-from app.api import auth, default, hospitals, disease_history, doctors, patients, schedule
+from app.api import auth, default, hospitals, disease_history, doctors, patients, schedule, appointment
 from app.main import app
 from app.storage.token_storage import RedisTokenStorage
 from config import JwtSettings, DEBUG_LOGIN, CLEARED_DIR, DISEASE_HISTORY_STATE_FILES
@@ -71,6 +71,7 @@ app.include_router(disease_history.router, prefix='/history', tags=['history'])
 app.include_router(doctors.router, tags=['doctors'])
 app.include_router(patients.router, tags=['patients'])
 app.include_router(schedule.router, tags=['schedules'])
+app.include_router(appointment.router, tags=['appointments'])
 app.mount("/static", StaticFiles(directory="static"), name='static')
 
 app.add_middleware(
