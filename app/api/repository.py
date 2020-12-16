@@ -197,6 +197,12 @@ class Repository:
         return {'data': schedule_data, 'result': True}
 
     @classmethod
+    def get_appointments_by_patient(cls, patient_id):
+        result = AppointmentsCollection.get_objs({'patient_id': patient_id})
+
+        return result
+
+    @classmethod
     def get_appointments_by_doctor(cls, doctor_id):
         result = AppointmentsCollection.get_objs({'doctor_id': doctor_id})
 
