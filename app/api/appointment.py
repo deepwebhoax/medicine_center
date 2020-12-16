@@ -17,7 +17,7 @@ async def add_appointment(appointment:AppointmentScheme):
     :return: status
     """
     status = Repository.add_appointment(appointment)
-
+    print(appointment)
     return status
 
 @router.delete('/appointment/delete')
