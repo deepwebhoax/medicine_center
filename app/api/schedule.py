@@ -1,8 +1,16 @@
 from app.data.repository import Repository
 
+<<<<<<< HEAD
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi_jwt_auth import AuthJWT
+||||||| merged common ancestors
+from fastapi import APIRouter, File, UploadFile
+=======
+from app.api.repository import Repository
+
+from fastapi import APIRouter, File, UploadFile
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
 
 # add correct db classes. create if don't exist
 # from app.validators.schemes.user_schemes import DiseaseHistoryScheme
@@ -19,8 +27,19 @@ async def get_schedule(doctor_id: str, Authorize: AuthJWT = Depends()):
     :param doctor_id:
     :return: schedule_data
     """
+<<<<<<< HEAD
     Authorize.jwt_required()
     result = Repository.get_schedule(doctor_id)
+||||||| merged common ancestors
+    schedule_data = ScheduleCollection.get_objs({'doctor_id': str(doctor_id)},
+                                                fields=(
+                                                '_id', 'doctor_id', 'weekDay', 'startDateTime', 'finishDateTime',
+                                                'hospital', 'room'))
+    if not schedule_data:
+        return {'data': {}, 'result': False}
+=======
+    result = Repository.get_schedule(doctor_id)
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
 
     return result
 

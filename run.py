@@ -9,9 +9,15 @@ from starlette.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_utils.tasks import repeat_every
 
+<<<<<<< HEAD
 from app.api import auth, default, hospitals, disease_history, doctors, patients, schedule, appointment, relationship
 from app.api.analytics import analytics
 from app.api import auth, default, hospitals, disease_history, doctors, patients, schedule, appointment, relationship
+||||||| merged common ancestors
+from app.api import auth, default, hospitals, disease_history, doctors, patients, schedule
+=======
+from app.api import auth, default, hospitals, disease_history, doctors, patients, schedule, appointment
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
 from app.main import app
 from app.storage.token_storage import RedisTokenStorage
 from chat.api import message, repository
@@ -77,8 +83,13 @@ app.include_router(disease_history.router, prefix='/history', tags=['history'])
 app.include_router(doctors.router, tags=['doctors'])
 app.include_router(patients.router, tags=['patients'])
 app.include_router(schedule.router, tags=['schedules'])
+<<<<<<< HEAD
 app.include_router(analytics.router, tags=['analytics'])
 app.include_router(appointment.router, tags=['appointments'])
+||||||| merged common ancestors
+=======
+app.include_router(appointment.router, tags=['appointments'])
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
 app.mount("/static", StaticFiles(directory="static"), name='static')
 chat.include_router(message.router, tags=['messages'])
 
@@ -97,4 +108,9 @@ app.mount("/profile", StaticFiles(directory="static/assets/assets"), name='asset
 
 if __name__ == '__main__':
     uvicorn.run("run:app", host='0.0.0.0', port=80)
+<<<<<<< HEAD
     # uvicorn.run("run:chat", host='0.0.0.1', port=8080)
+||||||| merged common ancestors
+=======
+    uvicorn.run("run:chat", host='0.0.0.1', port=8080)
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b

@@ -56,5 +56,10 @@ toml==0.10.2
 typing-extensions==3.7.4.3
 urllib3==1.26.2
 uvicorn==0.12.2
+<<<<<<< HEAD
 websockets==8.1
+||||||| merged common ancestors
+=======
+websockets=-8.1
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
 wrapt==1.12.1

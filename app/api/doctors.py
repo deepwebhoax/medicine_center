@@ -22,7 +22,13 @@ async def get_doctor_profile(user_id: str, Authorize: AuthJWT = Depends()):
 
 
 @router.post('/doctors/search/')
+<<<<<<< HEAD
 async def get_doctors_by_filter(filter: dict, Authorize: AuthJWT = Depends()):
+||||||| merged common ancestors
+async def get_doctors_by_dict(filter:dict):
+=======
+async def get_doctors_by_filter(filter:dict):
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
     """
     Get doctors list by features for search engine.
 

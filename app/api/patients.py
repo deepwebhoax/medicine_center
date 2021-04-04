@@ -22,7 +22,13 @@ async def get_patient_profile(user_id: str, Authorize: AuthJWT = Depends()):
 
 
 @router.post('/patients/search/')
+<<<<<<< HEAD
 async def get_patients_by_filter(filter: dict, Authorize: AuthJWT = Depends()):
+||||||| merged common ancestors
+async def get_patients_by_dict(filter:dict):
+=======
+async def get_patients_by_filter(filter:dict):
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b
     """
     Get patients list by attributes for search engine.
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/data/repository.py
 from app.data.database import UsersCollection
 from app.data.database import DoctorsCollection
 from app.data.database import PatientsCollection
@@ -6,7 +7,23 @@ from app.data.database.schedule import ScheduleCollection
 from app.data.database.appointment import AppointmentsCollection
 from app.data.database.disease_history import HistoriesCollection
 from app.data.database.relationship import RelationshipCollection
+||||||| merged common ancestors
+from app.database.users import UsersCollection
+from app.database.patient import PatientsCollection
+from app.database.doctor import DoctorsCollection
+from app.database.hospital import HospitalCollection
+from app.database.disease_history import HistoriesCollection
+=======
+from app.database.users import UsersCollection
+from app.database.doctor import DoctorsCollection
+from app.database.patient import PatientsCollection
+from app.database.hospital import HospitalCollection
+from app.database.schedule import ScheduleCollection
+from app.database.appointment import AppointmentsCollection
+from app.database.disease_history import HistoriesCollection
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b:app/api/repository.py
 
+from datetime import datetime
 
 class Repository:
     @classmethod
@@ -209,6 +226,7 @@ class Repository:
         return history
 
     @classmethod
+<<<<<<< HEAD:app/data/repository.py
     def get_all_histories(cls):
         histories = cls.__get_all_items(HistoriesCollection)
 
@@ -243,6 +261,37 @@ class Repository:
         return result
 
     @classmethod
+||||||| merged common ancestors
+=======
+    def get_schedule(cls, doctor_id):
+        schedule_data = ScheduleCollection.get_objs({'doctor_id': str(doctor_id)},
+                                                    fields=(
+                                                    '_id', 'doctor_id', 'weekDay', 'startDateTime', 'finishDateTime',
+                                                    'hospital', 'room'))
+        if not schedule_data:
+            return {'data': {}, 'result': False}
+        return {'data': schedule_data, 'result': True}
+
+    @classmethod
+    def get_appointments_by_patient(cls, patient_id):
+        result = AppointmentsCollection.get_objs({'patient_id': patient_id})
+
+        return result
+
+    @classmethod
+    def get_appointments_by_doctor(cls, doctor_id):
+        result = AppointmentsCollection.get_objs({'doctor_id': doctor_id})
+
+        return result
+
+    @classmethod
+    def get_appointments_by_filter(cls, filter):
+        result = AppointmentsCollection.get_objs(filter)
+
+        return result
+
+    @classmethod
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b:app/api/repository.py
     def add_history(cls, history):
         cls.__insert_obj_to_collection(HistoriesCollection, history)
         
@@ -265,6 +314,7 @@ class Repository:
         result = cls.__delete_obj(HistoriesCollection, history_id)
 
         return result
+<<<<<<< HEAD:app/data/repository.py
 
     @classmethod
     def add_appointment(cls, appointment):
@@ -293,3 +343,18 @@ class Repository:
         role = UsersCollection.to_json(UsersCollection.get_one_obj({'email': email}))['role']
 
         return role
+||||||| merged common ancestors
+=======
+
+    @classmethod
+    def add_appointment(cls, appointment):
+        result = cls.__insert_obj_to_collection(AppointmentsCollection, appointment)
+
+        return result
+
+    @classmethod
+    def delete_appointment(cls, appointment_id):
+        result = cls.__delete_obj(AppointmentsCollection, appointment_id)
+
+        return result
+>>>>>>> 7502b1f49ac5e4efb7074a3866b964592d53af6b:app/api/repository.py
